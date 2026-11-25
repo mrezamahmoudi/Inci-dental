@@ -1,0 +1,11 @@
+Inci-dental is deployed.
+
+Check the pod:
+  kubectl -n {{ .Release.Namespace }} get pods -l app.kubernetes.io/instance={{ .Release.Name }}
+
+Replace all example values before deploying. Keep exactly one application replica;
+its JSON state file does not support multiple writers. For production credentials,
+set existingSecret for API/Mattermost credentials and existingSecrets.jira,
+existingSecrets.gitlab, or existingSecrets.confluence only for selected providers.
+Those Secrets contain JIRA_API_TOKEN, GITLAB_TOKEN, or CONFLUENCE_API_TOKEN.
+Set REPORT_PROVIDER/ACTION_PROVIDER to none to disable unused capabilities.

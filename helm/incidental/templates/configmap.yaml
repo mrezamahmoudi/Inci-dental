@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "incidental.fullname" . }}
+  labels:
+    {{- include "incidental.labels" . | nindent 4 }}
+data:
+  CHAT_PROVIDER: {{ .Values.config.chatProvider | quote }}
+  REPORT_PROVIDER: {{ .Values.config.reportProvider | quote }}
+  ACTION_PROVIDER: {{ .Values.config.actionProvider | quote }}
+  MATTERMOST_URL: {{ .Values.config.mattermostUrl | quote }}
+  MATTERMOST_TEAM_ID: {{ .Values.config.mattermostTeamId | quote }}
+  INCIDENT_CHANNEL_PREFIX: {{ .Values.config.incidentChannelPrefix | quote }}
+  MATTERMOST_PRIVATE_CHANNELS: {{ .Values.config.privateChannels | quote }}
+  INCIDENT_INITIAL_MEMBERS: {{ join "," .Values.config.initialMembers | quote }}
+  INCIDENT_RESPONDERS: {{ join "," .Values.config.responders | quote }}
+  ONCALL_URL: {{ .Values.config.oncallUrl | quote }}
+  CONFLUENCE_URL: {{ .Values.config.confluenceUrl | quote }}
+  CONFLUENCE_EMAIL: {{ .Values.config.confluenceEmail | quote }}
+  CONFLUENCE_SPACE_ID: {{ .Values.config.confluenceSpaceId | quote }}
+  CONFLUENCE_PARENT_PAGE_ID: {{ .Values.config.confluenceParentPageId | quote }}
+  JIRA_URL: {{ .Values.config.jiraUrl | quote }}
+  JIRA_CLOUD: {{ .Values.config.jiraCloud | quote }}
+  JIRA_EMAIL: {{ .Values.config.jiraEmail | quote }}
+  JIRA_PROJECT_KEY: {{ .Values.config.jiraProjectKey | quote }}
+  JIRA_ISSUE_TYPE: {{ .Values.config.jiraIssueType | quote }}
+  GITLAB_URL: {{ .Values.config.gitlabUrl | quote }}
+  GITLAB_PROJECT_ID: {{ .Values.config.gitlabProjectId | quote }}
+  INCIDENT_REMINDER_INTERVAL_SECONDS: {{ .Values.config.reminderIntervalSeconds | quote }}
+  INCIDENT_STATE_FILE: "/data/incident-state.json"
+  LOG_LEVEL: {{ .Values.config.logLevel | quote }}
+  PORT: {{ .Values.service.containerPort | quote }}

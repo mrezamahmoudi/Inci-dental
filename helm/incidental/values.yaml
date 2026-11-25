@@ -1,0 +1,93 @@
+# Generic example values only. Replace all example hosts, IDs, and credentials.
+replicaCount: 1
+
+image:
+  repository: ghcr.io/your-github-username/inci-dental
+  tag: "0.2.0"
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 80
+  containerPort: 8000
+
+# Helm creates this Secret from the values below. For production, prefer an
+# external secret manager and existingSecret instead of committing secrets.
+existingSecret: ""
+# Optional: reuse existing Secrets without duplicating their keys in Helm values.
+# Each named Secret must contain the listed environment-variable key.
+existingSecrets:
+  mattermost: ""
+  confluence: ""
+  jira: ""
+  gitlab: ""
+secret:
+  incidentApiKey: "replace-with-a-long-random-api-key"
+  # Fill only the selected providers' tokens, or use existingSecrets below.
+  mattermostApiToken: "replace-with-your-mattermost-token"
+  confluenceApiToken: ""
+  jiraApiToken: ""
+  gitlabToken: ""
+
+config:
+  # Mattermost is currently the built-in chat implementation.
+  chatProvider: "mattermost"
+  # Report: confluence, gitlab, or none. Action: jira, gitlab, or none.
+  reportProvider: "gitlab"
+  actionProvider: "jira"
+
+  mattermostUrl: "https://mattermost.example.com"
+  mattermostTeamId: "replace-with-your-team-id"
+  incidentChannelPrefix: "incident"
+  privateChannels: true
+  initialMembers:
+    - "responder-one@example.com"
+    - "responder-two@example.com"
+  responders:
+    - "@responder-one"
+    - "@responder-two"
+  oncallUrl: "https://oncall.example.com/schedule"
+  confluenceUrl: ""
+  confluenceEmail: ""
+  confluenceSpaceId: ""
+  confluenceParentPageId: ""
+  jiraUrl: "https://jira.example.com"
+  jiraCloud: false
+  jiraEmail: ""
+  jiraProjectKey: "INC"
+  jiraIssueType: "Task"
+  gitlabUrl: "https://gitlab.example.com"
+  gitlabProjectId: "operations/incident-management"
+  reminderIntervalSeconds: 1800
+  logLevel: "INFO"
+
+persistence:
+  enabled: true
+  storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 10Mi
+  # Reuse an existing claim instead of creating one.
+  existingClaim: ""
+
+serviceMonitor:
+  enabled: false
+  interval: 30s
+  labels: {}
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi
+
+podAnnotations: {}
+podLabels: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}

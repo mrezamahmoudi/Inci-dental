@@ -1,0 +1,13 @@
+services:
+  incidental:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - incident-state:/data
+    restart: unless-stopped
+
+volumes:
+  incident-state:
